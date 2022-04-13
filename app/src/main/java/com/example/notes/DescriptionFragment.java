@@ -24,7 +24,7 @@ public class DescriptionFragment extends Fragment {
 
     private static final String ARG_ITEM = "param1";
     private static final String ARG_PARAM2 = "param2";
-    public DataActions dataActions = null;
+    public DataActions dataActions = new DataActionsImpl();
     private EditText editName;
     private EditText editDescription;
     private TextView dateTextField;
@@ -84,10 +84,6 @@ public class DescriptionFragment extends Fragment {
 
 
         dateTextField.setOnClickListener(view12 -> {
-//            DateDialog dateDialog = new DateDialog();
-//            dateDialog.show(getActivity().getFragmentManager(), "TAG");
-            // new DateDialog().show(requireActivity().getFragmentManager(), "TAG");
-
             new DatePickerDialog(getContext(), d,
                     dateAndTime.get(Calendar.YEAR),
                     dateAndTime.get(Calendar.MONTH),
@@ -104,11 +100,10 @@ public class DescriptionFragment extends Fragment {
                 DataNote data = new DataNote(mParam1.getId(), editName.getText().toString(),
                         editDescription.getText().toString(), dateTextField.getText().toString());
                 dataActions.addListElement(data);
-                Snackbar.make(view, "Save", Snackbar.LENGTH_LONG).show();
 
-                requireActivity().onBackPressed();
                 getActivity().getSupportFragmentManager()
-                        .beginTransaction().remove(this)
+                        .beginTransaction()
+                        .remove(this)
                         .commit();
             }
         });

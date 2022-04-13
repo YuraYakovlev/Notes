@@ -1,6 +1,9 @@
 package com.example.notes;
 
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -13,12 +16,16 @@ import java.util.List;
 
 public class DataNotesAdapter extends RecyclerView.Adapter<DataNotesAdapter.MyViewHolder> {
 
-    List dataNoteSource = new ArrayList<DataNote>();
+    DataActions source;
     public OpenDescriptionFragment openDescriptionFragment = null;
+    private int position = -1;
 
+    public int getPosition() {
+        return position;
+    }
 
-    public void setDataNoteSource(List dataNoteSource) {
-        this.dataNoteSource = dataNoteSource;
+    public void setDataNoteSource(DataActions dataNoteSource) {
+        this.source = dataNoteSource;
     }
 
     @NonNull
@@ -33,15 +40,15 @@ public class DataNotesAdapter extends RecyclerView.Adapter<DataNotesAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull DataNotesAdapter.MyViewHolder holder, int position) {
-        holder.bind((DataNote) dataNoteSource.get(position));
+        holder.bind(source.getData(position));
     }
 
     @Override
     public int getItemCount() {
-        return dataNoteSource.size();
+        return source.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
         }
@@ -52,6 +59,13 @@ public class DataNotesAdapter extends RecyclerView.Adapter<DataNotesAdapter.MyVi
             textView.setOnClickListener(view -> {
                 openDescriptionFragment.openDescription(dataNote);
             });
+
+        }
+
+
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+
         }
     }
 
