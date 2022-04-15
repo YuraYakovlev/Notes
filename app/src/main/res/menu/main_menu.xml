@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_info"
-        android:title="INFO"
+        android:id="@+id/action_close"
+        android:title="@string/close"
         app:showAsAction="withText">
-        
+
     </item>
     <item
         android:id="@+id/action_clear"
-        android:title="CLEAR"
+        android:title="@string/clear"
         app:showAsAction="withText">
 
     </item>

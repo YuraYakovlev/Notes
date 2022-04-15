@@ -31,6 +31,8 @@ public class DescriptionFragment extends Fragment {
     private Button save;
     private DataNote mParam1;
     private String mParam2;
+    private ListNotesFragment listNotesFragment = new ListNotesFragment();
+    DataNote dataNote;
 
 
     Calendar dateAndTime = Calendar.getInstance(Locale.getDefault());

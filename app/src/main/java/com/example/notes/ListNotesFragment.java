@@ -1,5 +1,7 @@
 package com.example.notes;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -14,7 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,11 +26,11 @@ import java.util.UUID;
 
 public class ListNotesFragment extends Fragment implements DataNotesAdapter.OpenDescriptionFragment {
 
-    private DataActions dataActions = new DataActionsImpl();
-   // List<DataNote> dataNoteList = new ArrayList<>();
-    private DataNotesAdapter adapter = new DataNotesAdapter();
+    public DataActions dataActions;
+   // List<DataNote> dataNoteList = dataActions.getDataNoteList();
+    private DataNotesAdapter adapter = new DataNotesAdapter(getActivity(), dataActions);
     private DescriptionFragment descriptionFragment;
-    ItemTouchHelper.Callback callback;
+    private SharedPreferences sharedPreferences = null;
 
 
     @Override
@@ -58,6 +59,9 @@ public class ListNotesFragment extends Fragment implements DataNotesAdapter.Open
             dataActions.clear();
             update();
             return true;
+        }else if (id == R.id.action_close){
+            getActivity().finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -65,6 +69,10 @@ public class ListNotesFragment extends Fragment implements DataNotesAdapter.Open
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+        dataActions = new PreferencesDataActions(sharedPreferences);
 
         adapter.setDataNoteSource(dataActions);
         adapter.openDescriptionFragment = this;
@@ -113,18 +121,6 @@ public class ListNotesFragment extends Fragment implements DataNotesAdapter.Open
             }
         }
     }
-//
-//    @Override
-//    public void delete(int position) {
-//        dataNoteList.remove(position);
-//    }
-//
-//    @Override
-//    public void clear() {
-//        dataNoteList.clear();
-//        update();
-//    }
-//
 
     public void update() {
         adapter.notifyDataSetChanged();
@@ -140,9 +136,10 @@ public class ListNotesFragment extends Fragment implements DataNotesAdapter.Open
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_delete){
-            //delete(adapter.getPosition());
+            dataActions.delete(adapter.getPosition());
         }
         adapter.notifyItemRemoved(adapter.getPosition());
         return super.onContextItemSelected(item);
     }
+
 }
