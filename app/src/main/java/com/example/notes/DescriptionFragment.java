@@ -26,6 +26,7 @@ public class DescriptionFragment extends Fragment {
 
     private static final String ARG_ITEM = "param1";
     private static final String ARG_PARAM2 = "param2";
+
     public DataActions dataActions;
     private EditText editName;
     private EditText editDescription;
@@ -73,6 +74,7 @@ public class DescriptionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_description, container, false);
     }
 

@@ -30,7 +30,7 @@ public class ListNotesFragment extends Fragment
 
     public DataActions dataActions;
     // List<DataNote> dataNoteList = dataActions.getDataNoteList();
-    private DataNotesAdapter adapter = new DataNotesAdapter(getActivity(), dataActions);
+    private DataNotesAdapter adapter;
     private DescriptionFragment descriptionFragment;
     private SharedPreferences sharedPreferences = null;
 
@@ -38,14 +38,19 @@ public class ListNotesFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+        View root = inflater.inflate(R.layout.fragment_list_notes, container, false);
+        RecyclerView recyclerView = root.findViewById(R.id.recycler_view_data_note_list);
+        adapter = new DataNotesAdapter(requireActivity(), dataActions);
+        registerForContextMenu(recyclerView);
 
-        return inflater.inflate(R.layout.fragment_list_notes, container, false);
+        return root;
     }
 
     @Override
@@ -133,14 +138,16 @@ public class ListNotesFragment extends Fragment
 
     @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
-        getActivity().getMenuInflater().inflate(R.menu.context_menu, menu);
+
         super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(Menu.NONE, R.id.action_delete, 2, "Delete");
     }
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_delete) {
+            if (adapter.getPosition() >= 0)
             dataActions.delete(adapter.getPosition());
         }
         adapter.notifyItemRemoved(adapter.getPosition());
@@ -148,8 +155,7 @@ public class ListNotesFragment extends Fragment
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void updateListEvent() {
         update();
     }
 }

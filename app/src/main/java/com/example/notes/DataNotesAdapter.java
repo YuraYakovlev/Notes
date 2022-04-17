@@ -1,11 +1,7 @@
 package com.example.notes;
 
 import android.app.Activity;
-import android.content.Context;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -13,13 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DataNotesAdapter extends RecyclerView.Adapter<DataNotesAdapter.MyViewHolder> {
 
-    private DataActions source;
     public OpenDescriptionFragment openDescriptionFragment = null;
+    private DataActions source;
     private int position = -1;
     private Activity activity;
 
@@ -56,26 +49,28 @@ public class DataNotesAdapter extends RecyclerView.Adapter<DataNotesAdapter.MyVi
         return source.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{ //implements View.OnCreateContextMenuListener{
+    interface OpenDescriptionFragment {
+        void openDescription(DataNote dataNote);
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder { //implements View.OnCreateContextMenuListener{
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-                //activity.registerForContextMenu(itemView);
-            //itemView.setOnCreateContextMenuListener(this);
-
+            //activity.registerForContextMenu(itemView);
         }
 
         public void bind(DataNote dataNote) {
             TextView textView = itemView.findViewById(R.id.data_note_name);
             textView.setText(dataNote.getName());
-            textView.setOnClickListener(view -> {
+            itemView.setOnClickListener(view -> {
                 openDescriptionFragment.openDescription(dataNote);
             });
-//            itemView.setOnLongClickListener(view -> {
-//                position = getLayoutPosition();
-//                itemView.showContextMenu(100,100);
-//                return true;
-//            });
+            itemView.setOnLongClickListener(view -> {
+                position = getLayoutPosition();
+                itemView.showContextMenu(500,100);
+                return true;
+            });
         }
 
 //        @Override
@@ -98,10 +93,6 @@ public class DataNotesAdapter extends RecyclerView.Adapter<DataNotesAdapter.MyVi
 //
 //            return true;
 //        };
-    }
-
-    interface OpenDescriptionFragment{
-        void openDescription(DataNote dataNote);
     }
 
 }
