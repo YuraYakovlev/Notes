@@ -24,7 +24,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Objects;
 import java.util.UUID;
 
-public class ListNotesFragment extends Fragment implements DataNotesAdapter.OpenDescriptionFragment {
+public class ListNotesFragment extends Fragment
+        implements DataNotesAdapter.OpenDescriptionFragment,
+        UpdateDataListListener {
 
     public DataActions dataActions;
     // List<DataNote> dataNoteList = dataActions.getDataNoteList();
@@ -73,6 +75,7 @@ public class ListNotesFragment extends Fragment implements DataNotesAdapter.Open
         sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
 
         dataActions = new PreferencesDataActions(sharedPreferences);
+        dataActions.setUpdateListListener(this);
 
         adapter.setDataNoteSource(dataActions);
         adapter.openDescriptionFragment = this;
@@ -88,7 +91,7 @@ public class ListNotesFragment extends Fragment implements DataNotesAdapter.Open
         recyclerView.setAdapter(adapter);
 
         descriptionFragment = new DescriptionFragment();
-        //descriptionFragment.dataActions = this;
+        descriptionFragment.dataActions = dataActions;
 
         FloatingActionButton floatingButton = view.findViewById(R.id.btn_new_note);
 
@@ -104,7 +107,7 @@ public class ListNotesFragment extends Fragment implements DataNotesAdapter.Open
     @Override
     public void openDescription(DataNote dataNote) {
         descriptionFragment = DescriptionFragment.newInstance(dataNote);
-        //descriptionFragment.dataActions = this;
+        descriptionFragment.dataActions = dataActions;
         requireActivity().getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, descriptionFragment)
                 .addToBackStack(null)
@@ -123,6 +126,8 @@ public class ListNotesFragment extends Fragment implements DataNotesAdapter.Open
     }
 
     public void update() {
+        dataActions.fetchList();
+        adapter.setDataNoteSource(dataActions);
         adapter.notifyDataSetChanged();
     }
 

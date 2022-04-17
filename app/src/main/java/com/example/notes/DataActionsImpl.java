@@ -41,4 +41,15 @@ public class DataActionsImpl implements DataActions{
     public void updateElement(DataNote dataNote) {
 
     }
+
+    @Override
+    public void fetchList() {
+
+    }
+
+    @Override
+    public void setUpdateListListener(UpdateDataListListener listener) {
+
+    }
+
 }

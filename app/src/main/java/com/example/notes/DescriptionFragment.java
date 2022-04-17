@@ -1,6 +1,8 @@
 package com.example.notes;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,8 +33,6 @@ public class DescriptionFragment extends Fragment {
     private Button save;
     private DataNote mParam1;
     private String mParam2;
-    private ListNotesFragment listNotesFragment = new ListNotesFragment();
-    DataNote dataNote;
 
 
     Calendar dateAndTime = Calendar.getInstance(Locale.getDefault());
@@ -101,7 +101,7 @@ public class DescriptionFragment extends Fragment {
 
                 DataNote data = new DataNote(mParam1.getId(), editName.getText().toString(),
                         editDescription.getText().toString(), dateTextField.getText().toString());
-                dataActions.addListElement(data);
+                dataActions.updateElement(data);
 
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()

@@ -11,4 +11,6 @@ public interface DataActions {
     void delete(int position);
     void clear();
     void updateElement(DataNote dataNote);
+    void fetchList();
+    void setUpdateListListener(UpdateDataListListener listener);
 }
