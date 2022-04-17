@@ -10,7 +10,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Name">
+        android:hint="@string/field_notes_name">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/name_edit_text"
@@ -21,7 +21,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Description">
+        android:hint="@string/field_notes_description">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/description_edit_text"
@@ -29,19 +29,15 @@
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:hint="@string/field_notes_date">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/date_text_view"
+        <androidx.appcompat.widget.AppCompatEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:hint="Date"
-            android:textSize="26sp" />
+            android:id="@+id/date_text_view"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -50,6 +46,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:text="save" />
+        android:text="@string/save" />
 
 </LinearLayout>

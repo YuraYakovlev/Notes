@@ -5,4 +5,9 @@
     <string name="close">CLOSE</string>
     <string name="clear">CLEAR</string>
     <string name="delete">DELETE</string>
+    <string name="field_notes_name">Name</string>
+    <string name="field_notes_description">Description</string>
+    <string name="field_notes_date">Date</string>
+    <string name="save">save</string>
+    <string name="notes_name">New note</string>
 </resources>

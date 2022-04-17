@@ -5,11 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="2dp"
+    android:clickable="true"
     android:elevation="3dp"
+    android:focusable="true"
+    android:longClickable="true"
     android:orientation="vertical"
     app:cardCornerRadius="10dp">
 
     <TextView
+
         android:id="@+id/data_note_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
