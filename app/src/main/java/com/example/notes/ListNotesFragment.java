@@ -27,7 +27,7 @@ import java.util.UUID;
 public class ListNotesFragment extends Fragment implements DataNotesAdapter.OpenDescriptionFragment {
 
     public DataActions dataActions;
-   // List<DataNote> dataNoteList = dataActions.getDataNoteList();
+    // List<DataNote> dataNoteList = dataActions.getDataNoteList();
     private DataNotesAdapter adapter = new DataNotesAdapter(getActivity(), dataActions);
     private DescriptionFragment descriptionFragment;
     private SharedPreferences sharedPreferences = null;
@@ -55,11 +55,11 @@ public class ListNotesFragment extends Fragment implements DataNotesAdapter.Open
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_clear){
+        if (id == R.id.action_clear) {
             dataActions.clear();
             update();
             return true;
-        }else if (id == R.id.action_close){
+        } else if (id == R.id.action_close) {
             getActivity().finish();
             return true;
         }
@@ -94,9 +94,9 @@ public class ListNotesFragment extends Fragment implements DataNotesAdapter.Open
 
         floatingButton.setOnClickListener(v -> {
             String uuid = UUID.randomUUID().toString();
-            dataActions.addListElement(new DataNote(uuid,"New Note", "", ""));
+            dataActions.addListElement(new DataNote(uuid, "New Note", "", ""));
             //dataNoteList.add(new DataNote(uuid, "New Note", "", ""));
-           update();
+            update();
         });
     }
 
@@ -109,10 +109,10 @@ public class ListNotesFragment extends Fragment implements DataNotesAdapter.Open
                 .add(R.id.fragment_container, descriptionFragment)
                 .addToBackStack(null)
                 .commit();
-        fillListElement(dataNote);
+        fillElementList(dataNote);
     }
 
-    public void fillListElement(DataNote dataNote) {
+    public void fillElementList(DataNote dataNote) {
         for (DataNote dataNote1 : dataActions.getDataNoteList()) {
             if (dataNote.getId().equals(dataNote1.getId())) {
                 dataNote1.setName(dataNote.getName());
@@ -135,11 +135,16 @@ public class ListNotesFragment extends Fragment implements DataNotesAdapter.Open
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_delete){
+        if (id == R.id.action_delete) {
             dataActions.delete(adapter.getPosition());
         }
         adapter.notifyItemRemoved(adapter.getPosition());
         return super.onContextItemSelected(item);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        update();
+    }
 }

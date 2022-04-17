@@ -24,7 +24,7 @@ public class DescriptionFragment extends Fragment {
 
     private static final String ARG_ITEM = "param1";
     private static final String ARG_PARAM2 = "param2";
-    public DataActions dataActions = new DataActionsImpl();
+    public DataActions dataActions;
     private EditText editName;
     private EditText editDescription;
     private TextView dateTextField;
